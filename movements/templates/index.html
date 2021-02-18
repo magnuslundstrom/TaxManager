@@ -1,32 +1,33 @@
 {% extends 'base.html' %} {% block content%}
 <h1 class="text-2xl">Welcome back {{user}}!</h1>
 <div class="mt-8">
-<table class="w-full border-collapse mt-5 text-md shadow-md rounded-md">
-<thead class="w-full">
-<tr class="bg-gray-200 font-bold">
-  <th class="text-left p-2">Sender</th>
-  <th class="text-left">Receiver</th>
-  <th class="text-left">Amount</th>
-  <th></th>
-</tr>
-</thead>
-<tbody class="mb-5">
-  {% for movement in movements %}
-  <tr class="border-b border-t">
-  <form action="{% url 'movements:deleteMovements' %}" method="POST" class="bg-gray-200 p-4">
-    {% csrf_token %}
-    <td class="p-4 {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
-    <td>{{movement.sender}}</td>
-    <td>{{movement.receiver}}</td>
-    <input type="hidden" name="id" value="{{movement.id}}" />
-    <td>
-    <button class="bg-yellow-400 text-white px-4 py-2 text-sm">Del</button>
-    <button class="bg-indigo-400 text-white px-4 py-2 text-sm">Edit</button>
-    </td>
-  </form>
-  </tr>
-  {% endfor %}
-</tbody>
-</table>
+  <table class="w-full border-collapse mt-5 text-md shadow-md rounded-md">
+    <thead class="w-full">
+      <tr class="bg-gray-200 font-bold">
+        <th class="text-left p-4">Sender</th>
+        <th class="text-left">Receiver</th>
+        <th class="text-left">Amount</th>
+        <th class="text-left">Created at</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="mb-5">
+      {% for movement in movements %}
+      <tr class="border-b border-t">
+        <form action="{% url 'movements:deleteMovements' %}" method="POST" class="bg-gray-200 p-4">
+          {% csrf_token %}
+          <td class="p-4 {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
+          <td>{{movement.sender}}</td>
+          <td>{{movement.receiver}}</td>
+          <td>{{movement.createdAt|date:'d-m-Y'}}</td>
+          <input type="hidden" name="id" value="{{movement.id}}" />
+          <td>
+            <button class="bg-green-400 rounded text-white px-4 py-2 text-sm">Details</button>
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 {% endblock %}

@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
     userId = request.user.id
-    movements = Movement.objects.filter(user__id=userId)
+    movements = Movement.objects.filter(user__id=userId).order_by('-createdAt')
 
     context = {
         'movements': movements
