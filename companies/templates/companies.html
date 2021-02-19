@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-2xl">Companies</h1>
+<a href="{% url 'companies:create' %}" class="text-blue-400 my-4 inline-block">Create</a>
+<p>Welcome to a overview over all companies your account is associated with</p>
+<div class="mt-8">
+  <table class="w-full border-collapse mt-5 text-md shadow-md rounded-md">
+    <thead class="w-full">
+      <tr class="bg-gray-200 font-bold">
+        <th class="text-left p-4">Name</th>
+        <th class="text-left">CVR</th>
+        <th class="text-left">Tax</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="mb-5">
+      {% for company in companies %}
+      <tr class="border-b border-t">
+          <td class="p-4">{{company.name}}</td>
+          <td>{{company.cvr}}</td>
+          <td>{% if company.eu == True %}25% {% else %} 0% {%endif%}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

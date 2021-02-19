@@ -13,10 +13,12 @@
       {% if user.is_authenticated %}
       <a href="{% url 'movements:movements' %}" class="text-white mr-4">All movements</a>
       <a href="{% url 'movements:createMovements' %}" class="text-white mr-4">Create movements</a>
+      <a href="{% url 'companies:index' %}" class="text-white mr-4">Companies</a>
       <a href="{% url 'accounts:logout' %}" class="text-white">Logout</a>
       {% else %}
       <a href="{% url 'accounts:login' %}" class="text-white mr-4">Login</a>
       <a href="{% url 'accounts:signUp' %}" class="text-white mr-4">Sign up</a>
+      <a href="{% url 'accounts:requestPasswordReset' %}" class="text-white mr-4">Reset password</a>
       {% endif %}
     </nav>
     {% block content %} {% endblock %}

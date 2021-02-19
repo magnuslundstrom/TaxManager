@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="text-2xl">Companies</h1>
+<a href="{% url 'companies:index' %}" class="text-blue-400 my-4 inline-block">Back to all companies</a>
+
+<p>Create a new company to be associated with your account</p>
+
+<form action="" class="flex flex-col" method="POST">
+  {% csrf_token %}
+  <input type="text" placeholder="Company name" name="companyName" class="mb-4 border border-gray p-4 rounded mt-4" />
+  <input type="text" placeholder="CVR" name="cvr" class="mb-4 border border-gray p-4 rounded mt-4" />
+  <div>
+    <label for="tax">EU?</label>
+    <input type="checkbox" id="tax" name="tax" value="True"/>
+  </div>
+  <button class="self-start px-4 py-2 text-white bg-blue-400 rounded mt-4">Create Partner</button>
+</form>
+<p class="mt-4">
+{% if errors %} {{errors}} {%endif%} {% endblock %}
+</p>
