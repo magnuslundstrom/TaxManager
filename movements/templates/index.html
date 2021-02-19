@@ -14,15 +14,11 @@
     <tbody class="mb-5">
       {% for movement in movements %}
       <tr class="border-b border-t">
-        <form action="{% url 'movements:deleteMovements' %}" method="POST" class="bg-gray-200 p-4">
-          {% csrf_token %}
           <td class="p-4 {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
           <td>{{movement.sender}}</td>
           <td>{{movement.receiver}}</td>
           <td>{{movement.createdAt|date:'d-m-Y'}}</td>
-          <input type="hidden" name="id" value="{{movement.id}}" />
-          <td>
-            <button class="bg-green-400 rounded text-white px-4 py-2 text-sm">Details</button>
+          <a href="{% url 'movements:item'%}/{{movement.id}}"></a>
           </td>
         </form>
       </tr>

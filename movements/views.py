@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from .models import Movement
 from django.contrib.auth.decorators import login_required
+from companies.models import Company
 # Create your views here.
 
 
@@ -18,7 +19,7 @@ def index(request):
 
 @login_required
 def create(request):
-    context = {'message': '', 'errors': ''}
+    context = {'message': '', 'errors': '', 'companies': []}
     if request.method == "POST":
         try:
             newMovement = Movement()
@@ -31,6 +32,10 @@ def create(request):
         except:
             context['errors'] = 'You provided wrong datatypes. Please provide num - string - string'
 
+    if request.method == 'GET':
+        context['companies'] = Company.objects.all().filter(
+            relatedToUser=request.user)
+        print(context['companies'])
     return render(request, 'create.html', context)
 
 

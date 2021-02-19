@@ -3,8 +3,18 @@
 <form action="" method="POST" class="flex flex-col">
   {% csrf_token %}
   <input type="text" placeholder="Amount" name="amount" class="border border-gray rounded-md p-2 mt-4" />
-  <input type="text" placeholder="sender" name="sender" class="border border-gray rounded-md p-2 mt-4" />
-  <input type="text" placeholder="receiver" name="receiver" class="border border-gray rounded-md mt-4 p-2" />
+  <label for="Receiver" class="mt-4 font-semibold mb-2">Receiver</label>
+  <select name="receiver" id="receiver" class="border border-gray-200 p-2 rounded">
+  {% for company in companies %}
+    <option value="{{ company.name }}">{{company.name}}</option>
+  {% endfor %}
+  </select>
+  <label for="sender" class="mt-4 font-semibold mb-2">Sender</label>
+  <select name="sender" id="sender" class="border border-gray-200 p-2 rounded">
+  {% for company in companies %}
+    <option value="{{ company.name }}">{{company.name}}</option>
+  {% endfor %}
+  </select>
   <button class="bg-green-400 self-start mt-4 text-white rounded px-4 py-2">Submit</button>
 </form>
 <p class="mt-4">{% if errors %} {{errors}} {% elif message %} {{message}} {%endif%}</p>

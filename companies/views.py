@@ -30,3 +30,18 @@ def create(request):
             context['errors'] = 'Something went wrong, please try again!'
 
     return render(request, 'create-company.html', context)
+
+
+@login_required
+def delete(request):
+    context = {'errors': ''}
+    if request.method == "POST":
+        companyId = request.POST['id']
+
+        try:
+            company = Company.objects.get(id=companyId)
+            company.delete()
+        except:
+            context['error'] = 'Something went wrong'
+
+    return render(request, 'companies.html', context)

@@ -18,7 +18,12 @@
       <tr class="border-b border-t">
           <td class="p-4">{{company.name}}</td>
           <td>{{company.cvr}}</td>
-          <td>{% if company.eu == True %}25% {% else %} 0% {%endif%}</td>
+          <td>{% if company.eu == True %}Yes{% else %} No {%endif%}</td>
+          <form action="{% url 'companies:delete' %}" method="POST">
+          {% csrf_token %}
+          <input type="hidden" name="id" value="{{company.id}}">
+          <td class="text-right"><button class="mr-4 bg-red-400 text-white px-4 py-2 rounded">Delete</button></td>
+          </form>
       </tr>
       {% endfor %}
     </tbody>
