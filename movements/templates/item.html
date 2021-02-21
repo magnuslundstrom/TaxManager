@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content%}
+<h1 class="text-2xl">Movement Id: {{movement.id}}</h1>
+<form action="" class="flex flex-col">
+
+<input type="text" placeholder="Amount" name="amount" value="{{movement.amount}}" class="border border-gray rounded-md p-2 mt-4" />
+<button class="bg-blue-400 text-white px-4 py-2 rounded mt-4 self-start">Update movement</button>
+</form>
+{% endblock %}

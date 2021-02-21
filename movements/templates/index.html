@@ -18,8 +18,7 @@
           <td>{{movement.sender}}</td>
           <td>{{movement.receiver}}</td>
           <td>{{movement.createdAt|date:'d-m-Y'}}</td>
-          <a href="{% url 'movements:item'%}/{{movement.id}}"></a>
-          </td>
+          <td><a href="{% url 'movements:item' id=movement.id %}" class="text-blue-400 font-semibold">Go to details</a></td>
         </form>
       </tr>
       {% endfor %}

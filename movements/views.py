@@ -22,6 +22,7 @@ def create(request):
     context = {'message': '', 'errors': '', 'companies': []}
     if request.method == "POST":
         try:
+            uploadedInvoice = request.FILES['invoice']
             newMovement = Movement()
             newMovement.amount = request.POST['amount']
             newMovement.sender = request.POST['sender']
@@ -32,10 +33,10 @@ def create(request):
         except:
             context['errors'] = 'You provided wrong datatypes. Please provide num - string - string'
 
+    # provides a list of companies to choose from
     if request.method == 'GET':
         context['companies'] = Company.objects.all().filter(
             relatedToUser=request.user)
-        print(context['companies'])
     return render(request, 'create.html', context)
 
 
@@ -48,3 +49,15 @@ def delete(request):
             movement.delete()
 
     return HttpResponseRedirect(reverse('movements:movements'))
+
+
+@login_required
+def displayItem(request, id):
+    movement = Movement.objects.get(id=id)
+    context = {
+        'movement': movement
+    }
+    if movement.user.id == request.user.id:
+        return render(request, 'item.html', context)
+    else:
+        print("Should have need to authorize page.")
