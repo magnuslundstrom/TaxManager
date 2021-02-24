@@ -5,10 +5,10 @@
   <table class="w-full border-collapse mt-5 text-md shadow-md rounded-md">
     <thead class="w-full">
       <tr class="bg-gray-200 font-bold">
-        <th class="text-left p-4">Sender</th>
-        <th class="text-left">Receiver</th>
-        <th class="text-left">Amount</th>
-        <th class="text-left">Created at</th>
+        <th class="text-left p-4">Amount</th>
+        <th class="text-left">Partner</th>
+        <th class="text-left">Date</th>
+        <th class="text-left">Invoice link</th>
         <th></th>
       </tr>
     </thead>
@@ -16,9 +16,9 @@
       {% for movement in movements %}
       <tr class="border-b border-t">
           <td class="p-4 {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
-          <td>{{movement.sender}}</td>
-          <td>{{movement.receiver}}</td>
-          <td>{{movement.createdAt|date:'d-m-Y'}}</td>
+          <td>{{movement.partner}}</td>
+          <td>{{movement.movementDate}}</td>
+          <td><a href="{{movement.invoiceLink}}" target="_blank">https://...</a></td>
           <td><a href="{% url 'movements:item' id=movement.id %}" class="text-blue-400 font-semibold">Go to details</a></td>
         </form>
       </tr>

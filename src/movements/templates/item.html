@@ -1,8 +1,28 @@
 {% extends 'base.html' %} {% block content%}
 <h1 class="text-2xl">Movement Id: {{movement.id}}</h1>
-<form action="" class="flex flex-col">
-
-<input type="text" placeholder="Amount" name="amount" value="{{movement.amount}}" class="border border-gray rounded-md p-2 mt-4" />
-<button class="bg-blue-400 text-white px-4 py-2 rounded mt-4 self-start">Update movement</button>
+<form action="" method="POST" class="flex flex-col" enctype="multipart/form-data">
+  {% csrf_token %}
+  <label for="amount" class="mt-4 font-semibold mb-2">Amount</label>
+  <input type="text" id="amount" placeholder="Amount" name="amount" class="border border-gray rounded-md p-2" value="{{movement.amount}}" />
+{% comment %} Partner {% endcomment %}
+  <label for="Partner" class="mt-4 font-semibold mb-2">Partner</label>
+  <select name="partner" id="partner" class="border border-gray-200 p-2 rounded">
+  {% for company in companies %}
+ <option value="{{ company.name }}" {% if company.name == movement.partner %} selected {%endif%}">{{company.name}}</option>
+  {% endfor %}
+  </select>
+{% comment %} Invoice Link {% endcomment %}
+  <label for="invoiceLink" class="mt-4 font-semibold mb-2">Invoice Link</label>
+  <input type="text" id="invoiceLink" placeholder="Invoice Link" name="invoiceLink" class="border border-gray rounded-md p-2" value="{{movement.invoiceLink}}" />
+{% comment %} Movement Date {% endcomment %}
+  <label for="movementDate" class="mt-4 font-semibold mb-2">Movement Date</label>
+  <input type="text" id="movementDate" placeholder="Movement Date" name="movementDate" class="border border-gray rounded-md p-2" value="{{movement.movementDate}}" />
+  <button class="bg-green-400 self-start mt-4 text-white rounded px-4 py-2">Submit</button>
+  <input type="hidden" name="movementId" value="{{movement.id}}">
 </form>
+<h2 class="text-2xl mt-4">Delete movement</h2>
+<form action="{% url "movements:deleteMovements" %}" method="POST">
+{% csrf_token %}
+<input type="hidden" name="id" value="{{movement.id}}">
+<button class="bg-red-600 px-4 py-2 text-white rounded mt-2">Delete</button></form>
 {% endblock %}

@@ -8,9 +8,10 @@ from django.utils.timezone import now
 class Movement(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.IntegerField(default=0)
-    sender = models.CharField(max_length=200, default='')
-    receiver = models.CharField(max_length=200, default='')
+    partner = models.CharField(max_length=200, default='')
+    invoiceLink = models.CharField(max_length=300, default='')
+    movementDate = models.CharField(max_length=20, default='')
     createdAt = models.DateTimeField(default=now)
 
     def __str__(self):
-        return f'amount: {self.amount} - sender: {self.sender} - receiver: {self.receiver}'
+        return f'amount: {self.amount} partner: {self.partner}'
