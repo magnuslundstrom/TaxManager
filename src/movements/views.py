@@ -10,9 +10,12 @@ from companies.models import Company
 def index(request):
     userId = request.user.id
     movements = Movement.objects.filter(user__id=userId).order_by('-createdAt')
-
+    balance = 0
+    for movement in movements:
+        balance += movement.amount
     context = {
-        'movements': movements
+        'movements': movements,
+        'balance': balance
     }
     return render(request, 'index.html', context)
 
