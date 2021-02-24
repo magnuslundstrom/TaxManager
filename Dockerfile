@@ -1,7 +1,9 @@
-FROM python:3.8
+FROM python:3
 
-COPY . /code
 WORKDIR /code
-RUN pipenv install
+COPY ./ ./
 
-CMD ["python3", "manage.py runserver"]
+RUN pip install --no-cache-dir --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python3", "./src/manage.py", "runserver", "0.0.0.0:8000"]
