@@ -1,4 +1,4 @@
-from accounts.models import PasswordResetRequest
+from .models import PasswordResetRequest
 from django.shortcuts import render, reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as dj_login, logout as dj_logout
@@ -82,7 +82,7 @@ def requestResetPassword(request):
             prr = PasswordResetRequest()
             prr.user = user
             prr.save()
-            print(prr)
+            print(prr.token)
             return HttpResponseRedirect(reverse('accounts:resetPassword'))
 
     return render(request, 'reset-password-request.html')

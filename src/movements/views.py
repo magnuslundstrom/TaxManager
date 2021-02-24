@@ -22,7 +22,6 @@ def create(request):
     context = {'message': '', 'errors': '', 'companies': []}
     if request.method == "POST":
         try:
-            uploadedInvoice = request.FILES['invoice']
             newMovement = Movement()
             newMovement.amount = request.POST['amount']
             newMovement.sender = request.POST['sender']
