@@ -12,7 +12,7 @@
     <nav class="bg-blue-400 p-4 my-4">
       {% if user.is_authenticated %}
       <a href="{% url 'movements:movements' %}" class="text-white mr-4">All movements</a>
-      <a href="{% url 'movements:createMovements' %}" class="text-white mr-4">Create movements</a>
+      <a href="{% url 'movements:createMovements' %}" class="text-white mr-4">Create movement</a>
       <a href="{% url 'companies:index' %}" class="text-white mr-4">Companies</a>
       <a href="{% url 'accounts:logout' %}" class="text-white">Logout</a>
       {% else %}
@@ -22,6 +22,6 @@
       {% endif %}
     </nav>
     {% block content %} {% endblock %}
-    <footer class="mt-8 bg-gray-400 text-white p-4">Footer incoming!</footer>
+    <footer class="mt-8 bg-gray-400 text-white p-4">Welcome to TaxManager - Take back the control over your tax!</footer>
   </body>
 </html>

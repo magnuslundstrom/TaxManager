@@ -3,19 +3,16 @@
 <form action="" method="POST" class="flex flex-col" enctype="multipart/form-data">
   {% csrf_token %}
   <input type="text" placeholder="Amount" name="amount" class="border border-gray rounded-md p-2 mt-4" />
-  <label for="Receiver" class="mt-4 font-semibold mb-2">Receiver</label>
-  <select name="receiver" id="receiver" class="border border-gray-200 p-2 rounded">
+  <label for="partner" class="mt-4 font-semibold mb-2">Partner</label>
+  <select name="partner" id="partner" class="border border-gray-200 p-2 rounded">
   {% for company in companies %}
     <option value="{{ company.name }}">{{company.name}}</option>
   {% endfor %}
   </select>
-  <label for="sender" class="mt-4 font-semibold mb-2">Sender</label>
-  <select name="sender" id="sender" class="border border-gray-200 p-2 rounded">
-  {% for company in companies %}
-    <option value="{{ company.name }}">{{company.name}}</option>
-  {% endfor %}
-  </select>
-  <input type="file" name="invoice" id="invoice" class="mt-4">
+  <label for="invoiceLink" class="mt-4 font-semibold mb-2">Invoice image link</label>
+  <input type="text" name="invoiceLink" id="invoiceLink" class="border border-gray-200 p-2 rounded">
+  <label for="movementDate" class="mt-4 font-semibold mb-2">Movement Date (dd-mm-yyyy)</label>
+  <input type="text" name="movementDate" id="movementDate" class="border border-gray-200 p-2 rounded">
   <button class="bg-green-400 self-start mt-4 text-white rounded px-4 py-2">Submit</button>
 </form>
 <p class="mt-4">{% if errors %} {{errors}} {% elif message %} {{message}} {%endif%}</p>
