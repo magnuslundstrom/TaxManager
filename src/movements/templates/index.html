@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% block content%}
 <h1 class="text-2xl">Welcome back {{user}}!</h1>
 <p class="mt-4 font-semibold">Total balance: <span class="{% if balance > 0 %} text-green-600 {% else %} text-red-600 {% endif %}">{{balance}}</span></p>
-<div class="mt-8">
-  <table class="w-full border-collapse mt-5 text-md shadow-md rounded-md">
+<div class="mt-8 grid grid-cols-2 gap-10">
+  <table class="w-full border-collapse text-md shadow-md rounded-md">
     <thead class="w-full">
       <tr class="bg-gray-200 font-bold">
         <th class="text-left p-4">Amount</th>
@@ -10,20 +10,50 @@
         <th class="text-left">Date</th>
         <th class="text-left">Invoice link</th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody class="mb-5">
       {% for movement in movements %}
-      <tr class="border-b border-t">
-          <td class="p-4 {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
-          <td>{{movement.partner}}</td>
-          <td>{{movement.movementDate}}</td>
-          <td><a href="{{movement.invoiceLink}}" target="_blank">https://...</a></td>
+      <tr class="border-b border-t" id="{{movement.id}}">
+          <td class="p-4 amount {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
+          <input value="{{movement.tax}}" type="hidden" class="tax">
+          <td class="partner">{{movement.partner}} {% if movement.tax == True %}(T){%endif%}</td>
+          <td class="movementDate">{{movement.movementDate}}</td>
+          <td><a href="{{movement.invoiceLink}}" target="_blank" class="invoiceLink">https://...</a></td>
           <td><a href="{% url 'movements:item' id=movement.id %}" class="text-blue-400 font-semibold">Go to details</a></td>
+          <td><input type="checkbox" name="" class="m-2 movement-input"></td>
         </form>
       </tr>
       {% endfor %}
     </tbody>
   </table>
+  <div class="bg-gray-200 p-4 rounded-md" id="calculator">
+    <div class="flex justify-between">
+      <h2 class="font-bold">Tax calculator</h2>
+      <p class="calculator--sum">0</p>
+    </div>
+    <div class="container"></div>
+  </div>
 </div>
+<script>
+const inputs = document.querySelectorAll('.movement-input');
+const calculator = document.querySelector('#calculator');
+let count = 0;
+inputs.forEach((checkbox) => {
+  checkbox.addEventListener('click', (e) => {
+    const wrapperTr = e.target.parentNode.parentNode;
+    const amount = wrapperTr.querySelector('.amount');
+    addContainer({id:wrapperTr.id,amount: amount.textContent})
+  })
+})
+
+
+function addContainer(dataObj) {
+  const container = document.querySelector('#calculator .container')
+  
+
+
+}
+</script>
 {% endblock %}

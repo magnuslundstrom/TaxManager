@@ -9,10 +9,16 @@ from companies.models import Company
 @login_required
 def index(request):
     userId = request.user.id
+    companies = Company.objects.all().filter(relatedToUser=request.user)
     movements = Movement.objects.filter(user__id=userId).order_by('-createdAt')
+
     balance = 0
     for movement in movements:
         balance += movement.amount
+        for company in companies:
+            if movement.partner == company.name:
+                movement.tax = company.eu
+
     context = {
         'movements': movements,
         'balance': balance
