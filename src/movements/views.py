@@ -29,23 +29,27 @@ def index(request):
 @login_required
 def create(request):
     context = {'message': '', 'errors': '', 'companies': []}
+    context['companies'] = Company.objects.all().filter(
+        relatedToUser=request.user)
     if request.method == "POST":
         try:
+            partner = Company.objects.get(id=request.POST['partner'])
+            if not partner:
+                raise Exception('Wrong partner id')
             newMovement = Movement()
             newMovement.amount = request.POST['amount']
-            newMovement.partner = request.POST['partner']
+            newMovement.partner = partner
             newMovement.invoiceLink = request.POST['invoiceLink']
             newMovement.user = request.user
-            newMovement.movementDate = request.POST['movementDate']
+            newMovement.createdAt = request.POST['createdAt']
             newMovement.save()
             context['message'] = 'Successfully created'
         except:
             context['errors'] = 'You provided wrong datatypes.'
-
+        return render(request, 'create.html', context)
     # provides a list of companies to choose from
     if request.method == 'GET':
-        context['companies'] = Company.objects.all().filter(
-            relatedToUser=request.user)
+        pass
     return render(request, 'create.html', context)
 
 

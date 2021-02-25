@@ -41,6 +41,7 @@ def delete(request):
         try:
             company = Company.objects.get(id=companyId)
             company.delete()
+            return HttpResponseRedirect(reverse('companies:index'))
         except:
             context['error'] = 'Something went wrong'
 

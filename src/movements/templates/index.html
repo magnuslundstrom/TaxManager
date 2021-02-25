@@ -5,11 +5,10 @@
   <table class="w-full border-collapse text-md shadow-md rounded-md">
     <thead class="w-full">
       <tr class="bg-gray-200 font-bold">
-        <th></th>
         <th class="text-left p-4">Amount</th>
         <th class="text-left">Partner</th>
         <th class="text-left">Date</th>
-        <th class="text-left">Invoice link</th>
+        <th class="text-left">Invoice</th>
         <th></th>
         <th></th>
       </tr>
@@ -17,13 +16,12 @@
     <tbody class="mb-5">
       {% for movement in movements %}
       <tr class="border-b border-t" id="{{movement.id}}">
-          <td class="p-2">{{movement.id}})</td>
           <td class="p-4 amount {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
           <input value="{{movement.tax}}" type="hidden" class="tax">
-          <td class="partner">{{movement.partner}} {% if movement.tax == True %}(T){%endif%}</td>
-          <td class="movementDate">{{movement.movementDate}}</td>
+          <td class="partner">{{movement.partner.name}} {% if movement.tax == True %}(T){%endif%}</td>
+          <td class="movementDate">{{movement.createdAt|date:'d-m-Y'}}</td>
           <td><a href="{{movement.invoiceLink}}" target="_blank" class="invoiceLink">https://...</a></td>
-          <td><a href="{% url 'movements:item' id=movement.id %}" class="text-blue-400 font-semibold">Go to details</a></td>
+          <td><a href="{% url 'movements:item' id=movement.id %}" class="text-blue-400 font-semibold">Details</a></td>
           <td><input type="checkbox" name="" class="m-2 movement-input"></td>
         </form>
       </tr>
@@ -40,7 +38,7 @@
 </div>
 <script>
 const inputs = document.querySelectorAll('.movement-input');
-const calculator = document.querySelector('#calculator');
+const calculator = document.querySelector('.calculator--sum');
 const container = document.querySelector('#calculator .container');
 let count = 0;
 
@@ -55,11 +53,21 @@ inputs.forEach((checkbox) => {
 
 
 function addItem(dataObj) {
-  container.insertAdjacentHTML('afterbegin', `<p id="i-${dataObj.id}" class="my-2">${dataObj.amount}</p>`)
+  container.insertAdjacentHTML('afterbegin', `<p id="i-${dataObj.id}" class="my-2">${dataObj.amount}</p>`);
+  const currentTax = parseInt(calculator.textContent);
+  let taxNumber = parseInt(dataObj.amount) > 0 ? 25 : 20;
+  calculator.textContent = parseInt(currentTax + (parseInt(dataObj.amount) * taxNumber / 100))
+
+
+
 }
 
 function removeItem(id) {
-  container.querySelector(`#i-${id}`).remove()
+  const item = container.querySelector(`#i-${id}`)
+  const currentTax = parseInt(calculator.textContent);
+  let taxNumber = parseInt(item.textContent) > 0 ? 25 : 20;
+  calculator.textContent = parseInt(currentTax - (parseInt(item.textContent) * taxNumber / 100))
+  item.remove()
 }
 </script>
 {% endblock %}

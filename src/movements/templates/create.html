@@ -6,14 +6,18 @@
   <label for="partner" class="mt-4 font-semibold mb-2">Partner</label>
   <select name="partner" id="partner" class="border border-gray-200 p-2 rounded">
   {% for company in companies %}
-    <option value="{{ company.name }}">{{company.name}}</option>
+    <option value="{{ company.id }}">{{company.name}}</option>
   {% endfor %}
   </select>
   <label for="invoiceLink" class="mt-4 font-semibold mb-2">Invoice image link</label>
   <input type="text" name="invoiceLink" id="invoiceLink" class="border border-gray-200 p-2 rounded">
-  <label for="movementDate" class="mt-4 font-semibold mb-2">Movement Date (dd-mm-yyyy)</label>
-  <input type="text" name="movementDate" id="movementDate" class="border border-gray-200 p-2 rounded">
+  <label for="createdAt" class="mt-4 font-semibold mb-2">Date of transaction</label>
+  <input name="createdAt" id="flatpickr" class="border border-gray-200 rounded p-2" placeholder="Pick a date">
   <button class="bg-green-400 self-start mt-4 text-white rounded px-4 py-2">Submit</button>
 </form>
 <p class="mt-4">{% if errors %} {{errors}} {% elif message %} {{message}} {%endif%}</p>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+var example = flatpickr('#flatpickr');
+</script>
 {% endblock %}
