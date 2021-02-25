@@ -17,7 +17,7 @@
     <tbody class="mb-5">
       {% for movement in movements %}
       <tr class="border-b border-t" id="{{movement.id}}">
-          <td>{{movement.id}}</td>
+          <td class="p-2">{{movement.id}})</td>
           <td class="p-4 amount {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
           <input value="{{movement.tax}}" type="hidden" class="tax">
           <td class="partner">{{movement.partner}} {% if movement.tax == True %}(T){%endif%}</td>
@@ -41,23 +41,25 @@
 <script>
 const inputs = document.querySelectorAll('.movement-input');
 const calculator = document.querySelector('#calculator');
+const container = document.querySelector('#calculator .container');
 let count = 0;
+
 inputs.forEach((checkbox) => {
   checkbox.addEventListener('click', (e) => {
     const wrapperTr = e.target.parentNode.parentNode;
     const amount = wrapperTr.querySelector('.amount');
-    addContainer({id:wrapperTr.id,amount: amount.textContent})
+    if(e.target.checked) addItem({id:wrapperTr.id,amount: amount.textContent})
+    else removeItem(wrapperTr.id)
   })
 })
 
 
-function addContainer(dataObj) {
-  const container = document.querySelector('#calculator .container');
-  container.insertAdjacentHTML('afterbegin', `
-  <p id="${dataObj.id}" class="my-2">${dataObj.amount}</p>
-  `)
+function addItem(dataObj) {
+  container.insertAdjacentHTML('afterbegin', `<p id="i-${dataObj.id}" class="my-2">${dataObj.amount}</p>`)
+}
 
-
+function removeItem(id) {
+  container.querySelector(`#i-${id}`).remove()
 }
 </script>
 {% endblock %}
