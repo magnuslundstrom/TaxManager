@@ -5,6 +5,7 @@
   <table class="w-full border-collapse text-md shadow-md rounded-md">
     <thead class="w-full">
       <tr class="bg-gray-200 font-bold">
+        <th></th>
         <th class="text-left p-4">Amount</th>
         <th class="text-left">Partner</th>
         <th class="text-left">Date</th>
@@ -16,6 +17,7 @@
     <tbody class="mb-5">
       {% for movement in movements %}
       <tr class="border-b border-t" id="{{movement.id}}">
+          <td>{{movement.id}}</td>
           <td class="p-4 amount {% if movement.amount < 0 %} text-red-600 {% else %} text-green-600 {%endif%}">{{movement.amount}}</td>
           <input value="{{movement.tax}}" type="hidden" class="tax">
           <td class="partner">{{movement.partner}} {% if movement.tax == True %}(T){%endif%}</td>
@@ -50,8 +52,10 @@ inputs.forEach((checkbox) => {
 
 
 function addContainer(dataObj) {
-  const container = document.querySelector('#calculator .container')
-  
+  const container = document.querySelector('#calculator .container');
+  container.insertAdjacentHTML('afterbegin', `
+  <p id="${dataObj.id}" class="my-2">${dataObj.amount}</p>
+  `)
 
 
 }
