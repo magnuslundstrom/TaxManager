@@ -54,9 +54,9 @@ inputs.forEach((checkbox) => {
 
 function addItem(dataObj) {
   container.insertAdjacentHTML('afterbegin', `<p id="i-${dataObj.id}" class="my-2">${dataObj.amount}</p>`);
-  const currentTax = parseInt(calculator.textContent);
-  let taxNumber = parseInt(dataObj.amount) > 0 ? 25 : 20;
-  calculator.textContent = parseInt(currentTax + (parseInt(dataObj.amount) * taxNumber / 100))
+  const currentTax = parseFloat(calculator.textContent);
+  let taxNumber = parseFloat(dataObj.amount) > 0 ? 25 : 20;
+  calculator.textContent = parseFloat(currentTax + (parseFloat(dataObj.amount) * taxNumber / 100))
 
 
 
@@ -64,9 +64,9 @@ function addItem(dataObj) {
 
 function removeItem(id) {
   const item = container.querySelector(`#i-${id}`)
-  const currentTax = parseInt(calculator.textContent);
-  let taxNumber = parseInt(item.textContent) > 0 ? 25 : 20;
-  calculator.textContent = parseInt(currentTax - (parseInt(item.textContent) * taxNumber / 100))
+  const currentTax = parseFloat(calculator.textContent);
+  let taxNumber = parseFloat(item.textContent) > 0 ? 25 : 20;
+  calculator.textContent = parseFloat(currentTax - (parseFloat(item.textContent) * taxNumber / 100))
   item.remove()
 }
 </script>
