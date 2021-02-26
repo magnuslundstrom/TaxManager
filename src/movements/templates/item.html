@@ -15,8 +15,8 @@
   <label for="invoiceLink" class="mt-4 font-semibold mb-2">Invoice Link</label>
   <input type="text" id="invoiceLink" placeholder="Invoice Link" name="invoiceLink" class="border border-gray rounded-md p-2" value="{{movement.invoiceLink}}" />
 {% comment %} Movement Date {% endcomment %}
-  <label for="movementDate" class="mt-4 font-semibold mb-2">Movement Date</label>
-  <input type="text" id="movementDate" placeholder="Movement Date" name="movementDate" class="border border-gray rounded-md p-2" value="{{movement.movementDate}}" />
+  <label for="createdAt" class="mt-4 font-semibold mb-2">Date of transaction</label>
+  <input name="createdAt" id="flatpickr" class="border border-gray-200 rounded p-2" placeholder="Pick a date" value="{{movement.createdAt}}">
   <button class="bg-green-400 self-start mt-4 text-white rounded px-4 py-2">Submit</button>
   <input type="hidden" name="movementId" value="{{movement.id}}">
 </form>
@@ -25,4 +25,8 @@
 {% csrf_token %}
 <input type="hidden" name="id" value="{{movement.id}}">
 <button class="bg-red-600 px-4 py-2 text-white rounded mt-2">Delete</button></form>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+flatpickr('#flatpickr');
+</script>
 {% endblock %}
